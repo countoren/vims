@@ -74,7 +74,7 @@ let
     # $NVIM - is nvim env variable that load with the specific nvim .pipe(address) path/url
     nvim-client-send = ''${nvim-exe} --server $NVIM --remote-send "<C-\><C-N>:$1 $(${self.maybe-realpath} "''\${@:2}")<CR>" '';
     sp = '' ${self.nvim-client-send} sp "$@" '';
-    ed = '' ${self.nvim-client-send} edit "$@" '';
+    e = '' ${self.nvim-client-send} edit "$@" '';
     vsp = '' ${self.nvim-client-send} vsp "$@" '';
     tabe = '' ${self.nvim-client-send} tabe "$@" '';
     cdv = '' ${self.nvim-client-send} cd $(pwd) '';
