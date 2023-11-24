@@ -30,12 +30,15 @@
 
       '';  
       additionalPlugins = with pkgs.vimPlugins; [
-        (nvim-treesitter.withPlugins (p: [ 
-          p.nix p.jq
-          p.c p.cpp p.javascript p.bash p.bibtex p.c_sharp p.css p.dockerfile 
-          p.git_rebase p.gitattributes p.gitignore p.html p.latex p.lua p.markdown 
-          p.markdown_inline p.rust p.sql p.typescript p.vim p.yaml p.go 
-        ]))
+        {
+          plugin = nvim-treesitter.withAllGrammars;
+          config = ''
+            let $PATH = $PATH.":${pkgs.tree-sitter}/bin"
+            let $PATH = $PATH.":${pkgs.nodejs}/bin"
+            let $PATH = $PATH.":${pkgs.gcc}/bin"
+          '';
+      }
+
 
       #does not work for now it seems ts-rainbow returns nil in config.lua
       # local rainbow = require 'ts-rainbow'
