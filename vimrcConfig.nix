@@ -28,6 +28,8 @@ in
     let $MYPKGS = '${pkgsPath}'
     let $EDITOR = 'sp'
     let $PATH = "${insideVimVifm}/bin:".$PATH
+    " needed wl-copy, might not be needed in future versions
+    let $PATH = "${pkgs.wl-clipboard}/bin:".$PATH
 
     " VIM Shell
     set shell=${pkgs.zsh}/bin/zsh
