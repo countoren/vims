@@ -1,6 +1,6 @@
 { vimUtils, fetchFromGitHub }:
 {
-  ultisnips-2019-07-08 = vimUtils.buildVimPluginFrom2Nix {
+  ultisnips-2019-07-08 = vimUtils.buildVimPlugin{
     name = "ultisnips-countoren-2019-07-08";
     src = fetchFromGitHub {
       owner = "countoren";
@@ -11,7 +11,7 @@
     dependencies = [];
   };
 
-  # ale = vimUtils.buildVimPluginFrom2Nix {
+  # ale = vimUtils.buildVimPlugin{
   #   name = "ale-2017-07-10";
   #   src = fetchFromGitHub {
   #     owner = "w0rp";
