@@ -67,7 +67,7 @@ let
     '';
     nvim-client = ''${nvim-exe} --server "$(${self.nvim-get-server-file})" --remote $(${self.maybe-realpath} "$@") '';
     nvim-clean-server-files = ''
-      for server in $(ls $HOME/.cache/nvim/*.pipe); do
+      for server in $(ls $HOME/.cache/nvim/*.pipe 2> /dev/null); do
         echo $server | ${self.nvim-client-expr-with-server} "echo" 2> /dev/null || rm -f $server
       done
     '';
