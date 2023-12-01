@@ -11,6 +11,22 @@
       autocmd TermOpen * startinsert
       luafile ${./config.lua}
 
+      set guifont=DejaVu\ Sans\ Mono:h15
+      let g:neovide_remember_window_size = v:true
+      set lazyredraw
+      set title
+      augroup dirchange
+      autocmd!
+      autocmd DirChanged * let &titlestring=v:event['cwd']
+      augroup END
+
+      tnoremap <c-h> <c-\><c-n><c-w>h
+      tnoremap <c-j> <c-\><c-n><c-w>j
+      tnoremap <c-k> <c-\><c-n><c-w>k
+      tnoremap <c-l> <c-\><c-n><c-w>l
+      tnoremap <a-;> <c-\><c-n>:
+
+
       let g:terminal_color_0 = "#232627"
       let g:terminal_color_1 = "#ed1515"
       let g:terminal_color_2 = "#11d116"
