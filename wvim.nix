@@ -11,6 +11,7 @@ import ./nvim.nix { inherit pkgs;
   '' + additionalVimrc;
   additionalPlugins = with pkgs.vimPlugins; [
     vim-go
+    vim-python-pep8-indent
     (pkgs.vimUtils.buildVimPlugin {
       name = "quick-lint-js";
       src = ''${pkgs.fetchzip {
