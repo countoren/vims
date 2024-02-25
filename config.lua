@@ -10,10 +10,10 @@ require "nvim-treesitter.configs".setup {
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = '<C-I>',
-            scope_incremental = '<C-I>',
-            node_incremental = '<C-K>',
-            node_decremental = '<C-J>',
+            init_selection = '<C-S-I>',
+            scope_incremental = '<C-S-I>',
+            node_incremental = '<C-S-K>',
+            node_decremental = '<C-S-J>',
         },
     },
     -- rainbow = {
