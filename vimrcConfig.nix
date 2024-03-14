@@ -78,7 +78,6 @@ in
       vim-snippets  # snippet database
       vim-lastplace
       indentLine
-      treesj
 
       {
          plugin = LanguageClient-neovim;
