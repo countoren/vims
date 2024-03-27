@@ -82,11 +82,16 @@ in
       {
          plugin = LanguageClient-neovim;
          config = ''
-          let $PATH = $PATH.":${pkgs.rnix-lsp}/bin"
+          let $PATH = $PATH.":${pkgs.nil}/bin"
 
-          let g:LanguageClient_serverCommands = {
-          \ 'nix': ['rnix-lsp']
-          \ }
+          if executable('nil')
+          autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'nil',
+          \ 'cmd': {server_info->['nil']},
+          \ 'whitelist': ['nix'],
+          \ })
+          endif
+
           " identLine
           " Dont conceal (json)
           let g:indentLine_setConceal = 0 
