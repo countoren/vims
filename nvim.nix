@@ -5,13 +5,14 @@
 , pkgsPath ? toString (import ../pkgsPath.nix)
 , additionalVimrc? ""
 , additionalPlugins ? [] 
+, fontSize? "15"
 , vimrcConfig ? import ./vimrcConfig.nix { inherit pkgs pkgsPath;
   additionalVimrc = ''
       " nvim specific configs
       autocmd TermOpen * startinsert
       luafile ${./config.lua}
 
-      set guifont=DejaVu\ Sans\ Mono:h15
+      set guifont=DejaVu\ Sans\ Mono:h${fontSize}
       let g:neovide_remember_window_size = v:true
       set lazyredraw
       set title
@@ -112,7 +113,7 @@ let
 
     nvim-open = ''
       _params="$@"
-      if ls $HOME/.cache/*.pipe >/dev/null 2>&1; then
+      if ls $HOME/.cache/*.pipe >/dev/null 2>&1; thenmy way for secrets is by wrapping in top level shell script that will copy 
         ${self.nvim-client} $_params
       else
         ${self.nvim-server} $_params
