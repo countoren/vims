@@ -6,7 +6,7 @@
 , additionalVimrc? ""
 , additionalPlugins ? [] 
 , vimrcConfig ? import ./vimrcConfig.nix { inherit pkgs pkgsPath;
-  additionalVimrc = additionalVimrc + ''
+  additionalVimrc = ''
       " nvim specific configs
       autocmd TermOpen * startinsert
       luafile ${./config.lua}
@@ -44,7 +44,7 @@
       let g:terminal_color_14 = "#16a085"
       let g:terminal_color_15 = "#ffffff"
 
-      '';  
+      '' + additionalVimrc;  
       additionalPlugins = with pkgs.vimPlugins; [
         {
           plugin = nvim-treesitter.withAllGrammars;
