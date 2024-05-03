@@ -12,7 +12,9 @@ let
     buildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/vifm \
-      --add-flags '-c "set vicmd=vsp"' \
+      --add-flags '-c "set vicmd=e"' \
+      --add-flags '-c "filev *.* bat --color always --wrap never --pager never %c -p"' \
+      --add-flags '-c "filev */ eza --icons -T --color=always %c %q"' \
       --add-flags '--choose-dir -' \
       --add-flags ' .'
       #shorter the name for easy of use and remove conflicts
