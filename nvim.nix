@@ -113,7 +113,7 @@ let
 
     nvim-open = ''
       _params="$@"
-      if ls $HOME/.cache/*.pipe >/dev/null 2>&1; thenmy way for secrets is by wrapping in top level shell script that will copy 
+      if ls $HOME/.cache/*.pipe >/dev/null 2>&1; then
         ${self.nvim-client} $_params
       else
         ${self.nvim-server} $_params
