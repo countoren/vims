@@ -15,6 +15,8 @@ let
       --add-flags '-c "set vicmd=e"' \
       --add-flags '-c "filev *.* bat --color always --wrap never --pager never %c -p"' \
       --add-flags '-c "filev */ eza --icons -T --color=always %c %q"' \
+      --add-flags '-c "filev *.* ${pkgs.bat}/bin/bat --color always --wrap never --pager never %c -p"' \
+      --add-flags '-c "filev */ ${pkgs.eza}/bin/eza --icons -T --color=always %c %q"' \
       --add-flags '--choose-dir -' \
       --add-flags ' .'
       #shorter the name for easy of use and remove conflicts
