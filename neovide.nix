@@ -1,23 +1,8 @@
 { pkgs ? (builtins.getFlake (toString ../.)).inputs.nixpkgs.legacyPackages.${builtins.currentSystem}
 , pkgsPath ? toString (import ../pkgsPath.nix)
-, additionalVimrc?  ''
-set guifont=DejaVu\ Sans\ Mono:h15
-let g:neovide_remember_window_size = v:true
-set lazyredraw
-set title
-augroup dirchange
-    autocmd!
-    autocmd DirChanged * let &titlestring=v:event['cwd']
-augroup END
-
-tnoremap <c-h> <c-\><c-n><c-w>h
-tnoremap <c-j> <c-\><c-n><c-w>j
-tnoremap <c-k> <c-\><c-n><c-w>k
-tnoremap <c-l> <c-\><c-n><c-w>l
-tnoremap <a-;> <c-\><c-n>:
-
-''
-, nvim ? import ./nvim.nix { inherit pkgs pkgsPath additionalVimrc;} 
+, additionalVimrc?  ""
+, additionalPlugins? []
+, nvimNixPath ? ./nvim.nix  
 }:
 pkgs.symlinkJoin {
   name = "onvide";
@@ -34,7 +19,7 @@ pkgs.symlinkJoin {
     })
     */
     pkgs.neovide
-    nvim
+    (import nvimNixPath { inherit pkgs pkgsPath additionalVimrc additionalPlugins; } )
   ];
   buildInputs = [ pkgs.makeWrapper ];
   postBuild = ''

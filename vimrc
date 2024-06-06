@@ -56,12 +56,25 @@ if has('macunix')
   nnoremap gx :call OpenURLUnderCursor()<CR>
 endif
 
+" Open url under cursor
+function! OpenURLUnderCursor()
+  let s:uri = expand('<cWORD>')
+  let s:uri = substitute(s:uri, '?', '\\?', '')
+  let s:uri = shellescape(s:uri, 1)
+  if s:uri != ''
+    silent exec "!firefox '".s:uri."'"
+    :redraw!
+  endif
+endfunction
+nnoremap gx :call OpenURLUnderCursor()<CR>
+
+
 " Leader 
 let mapleader = " "
 
 " /*** vifm config ***/
 
-let g:vifm_replace_netrw = 1
+" let g:vifm_replace_netrw = 1
 let g:vifm_replace_netrw_cmd = "SplitVifm"
 let g:vifm_embed_split = 1
 " let g:vifm_embed_term = 1
@@ -72,7 +85,9 @@ nnoremap <leader>s :SplitVifm<CR>
 nnoremap <leader>v :VsplitVifm<CR>
 nnoremap <leader>d :DiffVifm<CR>
 
-
+"diffs
+nnoremap <leader>p :diffput<CR>
+nnoremap <leader>g :diffget<CR>
 
 "repeat F T movements 
 nnoremap <leader>, ,
@@ -111,16 +126,21 @@ inoremap <C-]> <C-x><C-]>
  map <C-h> <C-w><C-h>
  map <C-l> <C-w><C-l>
 
+" Close tab
+noremap <leader>tc :tabclose
+
  " set terminal to interactive
 set shellcmdflag=-ic
+
 
 " VIM Shell
 " set shell=/bin/zsh
 
-" VIM Terminal
+" VIM Terminal - only on vim (not nvim, nvim uses server client as commands)
 " Function to call from the the terminal in order to change working dir
 " arglist : [ cwd ]
 " change window local working directory
+
 function! Tapi_lcd(bufnum, arglist)
 	let winid = bufwinid(a:bufnum)
 	let cwd = get(a:arglist, 0, '''')
@@ -141,8 +161,6 @@ endfunction
 
 command! -nargs=* Tt :term <args>
 nmap <silent> <leader>t :sp \| term<CR>
-
-tnoremap <C-[><C-[> <C-\><C-n>
 tnoremap <C-w>; <C-w>:
 "window movement
 tnoremap <C-j> <C-w><C-j>

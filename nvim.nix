@@ -5,11 +5,28 @@
 , pkgsPath ? toString (import ../pkgsPath.nix)
 , additionalVimrc? ""
 , additionalPlugins ? [] 
+, fontSize? "15"
 , vimrcConfig ? import ./vimrcConfig.nix { inherit pkgs pkgsPath;
-  additionalVimrc = additionalVimrc + ''
+  additionalVimrc = ''
       " nvim specific configs
       autocmd TermOpen * startinsert
       luafile ${./config.lua}
+
+      set guifont=DejaVu\ Sans\ Mono:h${fontSize}
+      let g:neovide_remember_window_size = v:true
+      set lazyredraw
+      set title
+      augroup dirchange
+      autocmd!
+      autocmd DirChanged * let &titlestring=v:event['cwd']
+      augroup END
+
+      tnoremap <c-h> <c-\><c-n><c-w>h
+      tnoremap <c-j> <c-\><c-n><c-w>j
+      tnoremap <c-k> <c-\><c-n><c-w>k
+      tnoremap <c-l> <c-\><c-n><c-w>l
+      tnoremap <a-;> <c-\><c-n>:
+
 
       let g:terminal_color_0 = "#232627"
       let g:terminal_color_1 = "#ed1515"
@@ -28,14 +45,17 @@
       let g:terminal_color_14 = "#16a085"
       let g:terminal_color_15 = "#ffffff"
 
-      '';  
+      '' + additionalVimrc;  
       additionalPlugins = with pkgs.vimPlugins; [
-        (nvim-treesitter.withPlugins (p: [ 
-          p.nix p.jq
-          p.c p.cpp p.javascript p.bash p.bibtex p.c_sharp p.css p.dockerfile 
-          p.git_rebase p.gitattributes p.gitignore p.html p.latex p.lua p.markdown 
-          p.markdown_inline p.rust p.sql p.typescript p.vim p.yaml p.go 
-        ]))
+        {
+          plugin = nvim-treesitter.withAllGrammars;
+          config = ''
+            let $PATH = $PATH.":${pkgs.tree-sitter}/bin"
+            let $PATH = $PATH.":${pkgs.nodejs}/bin"
+            let $PATH = $PATH.":${pkgs.gcc}/bin"
+          '';
+      }
+
 
       #does not work for now it seems ts-rainbow returns nil in config.lua
       # local rainbow = require 'ts-rainbow'
@@ -64,7 +84,7 @@ let
     '';
     nvim-client = ''${nvim-exe} --server "$(${self.nvim-get-server-file})" --remote $(${self.maybe-realpath} "$@") '';
     nvim-clean-server-files = ''
-      for server in $(ls $HOME/.cache/nvim/*.pipe); do
+      for server in $(ls $HOME/.cache/nvim/*.pipe 2> /dev/null); do
         echo $server | ${self.nvim-client-expr-with-server} "echo" 2> /dev/null || rm -f $server
       done
     '';
@@ -74,11 +94,13 @@ let
     # $NVIM - is nvim env variable that load with the specific nvim .pipe(address) path/url
     nvim-client-send = ''${nvim-exe} --server $NVIM --remote-send "<C-\><C-N>:$1 $(${self.maybe-realpath} "''\${@:2}")<CR>" '';
     sp = '' ${self.nvim-client-send} sp "$@" '';
-    ed = '' ${self.nvim-client-send} edit "$@" '';
+    e = '' ${self.nvim-client-send} edit "$@" '';
     vsp = '' ${self.nvim-client-send} vsp "$@" '';
     tabe = '' ${self.nvim-client-send} tabe "$@" '';
     cdv = '' ${self.nvim-client-send} cd $(pwd) '';
     nvim-server-file = ''echo $HOME"/.cache/nvim/$(date +"%d_%m_%YT%H_%M_%S").pipe" '';
+
+    vimdiff = ''${self.nvim-client-send} "tabe $1 | vert diffs $2" '';
 
     nvim-get-all-servers-with-location = ''
       for server in $(ls $HOME"/.cache/nvim" | grep ".pipe$"); do

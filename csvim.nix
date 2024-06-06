@@ -14,7 +14,7 @@
         ];
         additionalCustPlugins = {
           # https://github.com/ionide/Ionide-vim
-          omnisharp-vim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+          omnisharp-vim = pkgs.vimUtils.buildVimPlugin {
               name = "omnisharp-vim";
               src = pkgs.fetchFromGitHub {
                 owner = "OmniSharp";

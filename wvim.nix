@@ -1,13 +1,17 @@
 { pkgs ? import <nixpkgs> {}
 , pkgsPath
 , additionalVimrc 
+, additionalPlugins
 }:
 import ./nvim.nix { inherit pkgs; 
   additionalVimrc = ''
     let $PATH = $PATH.":${pkgs.quick-lint-js}/bin"
+    let $PATH = $PATH.":${pkgs.gopls}/bin"
+    let $PATH = $PATH.":${pkgs.go}/bin"
   '' + additionalVimrc;
   additionalPlugins = with pkgs.vimPlugins; [
     vim-go
+    vim-python-pep8-indent
     (pkgs.vimUtils.buildVimPlugin {
       name = "quick-lint-js";
       src = ''${pkgs.fetchzip {

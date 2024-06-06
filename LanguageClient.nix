@@ -26,7 +26,7 @@ let
         '';
       };
 in
-  vimUtils.buildVimPluginFrom2Nix {
+  vimUtils.buildVimPlugin {
     pname = "LanguageClient-neovim";
     inherit version;
     src = LanguageClient-neovim-src;
