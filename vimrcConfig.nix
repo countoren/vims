@@ -125,7 +125,19 @@ in
         vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, opts)
       end,
     })
-      require('lspconfig').nixd.setup{}
+        require('lspconfig').nil_ls.setup {
+          autostart = true,
+          capabilities = caps,
+          cmd = { '${pkgs.nil}/bin/nil' },
+          settings = {
+            ['nil'] = {
+              testSetting = 42,
+              formatting = {
+                command = { "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" },
+              },
+            },
+          },
+        }
     EOF
   '';
       }
