@@ -82,6 +82,15 @@ in
       vim-lastplace
       indentLine
 
+      #LSP
+      {
+        plugin = fidget-nvim;
+        config ='' 
+        lua << EOF
+          require('fidget').setup {}
+        EOF'';
+      }
+
       {
         plugin = nvim-lspconfig; 
   config =
