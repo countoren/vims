@@ -72,19 +72,6 @@ nnoremap gx :call OpenURLUnderCursor()<CR>
 " Leader 
 let mapleader = " "
 
-" /*** vifm config ***/
-
-" let g:vifm_replace_netrw = 1
-let g:vifm_replace_netrw_cmd = "SplitVifm"
-let g:vifm_embed_split = 1
-" let g:vifm_embed_term = 1
-" Do not load netrw plugin
-let g:loaded_netrw = 1
-let g:loaded_netrwPlugin = 1
-nnoremap <leader>s :SplitVifm<CR>
-nnoremap <leader>v :VsplitVifm<CR>
-nnoremap <leader>d :DiffVifm<CR>
-
 "diffs
 nnoremap <leader>p :diffput<CR>
 nnoremap <leader>g :diffget<CR>
