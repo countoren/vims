@@ -81,8 +81,14 @@ in
       vim-snippets  # snippet database
       vim-lastplace
       indentLine
+      #TODO: maybe need setup
+      zen-mode-nvim
 
+      # Markdown
+      markdown-preview-nvim
       
+      # Errors
+      trouble-nvim
 
       #LSP
       {
@@ -92,6 +98,9 @@ in
           require('fidget').setup {}
         EOF'';
       }
+      #TODO: maybe need setup
+      nvim-lint
+
 
       {
         plugin = nvim-lspconfig; 
