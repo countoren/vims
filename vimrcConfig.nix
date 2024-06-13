@@ -154,6 +154,7 @@ EOF
   ## Global mappings.
   ''
     let $PATH = $PATH.":${pkgs.nixd}/bin"
+    let g:indentLine_setConceal = 0 
 
     lua << EOF
     vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
