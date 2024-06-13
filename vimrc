@@ -125,30 +125,6 @@ let g:loaded_netrwPlugin = 1
 
 " VIM Shell
 " set shell=/bin/zsh
-
-" VIM Terminal - only on vim (not nvim, nvim uses server client as commands)
-" Function to call from the the terminal in order to change working dir
-" arglist : [ cwd ]
-" change window local working directory
-
-function! Tapi_lcd(bufnum, arglist)
-	let winid = bufwinid(a:bufnum)
-	let cwd = get(a:arglist, 0, '''')
-	if winid == -1 || empty(cwd)
-		return
-	endif
-	exec 'cd ' . cwd
-endfunction
-
-function! Tapi_sp(bufnum, arglist)
-	let winid = bufwinid(a:bufnum)
-	let path = get(a:arglist, 0, '''')
-	if winid == -1 || empty(path)
-		return
-	endif
-	exec 'sp ' . path
-endfunction
-
 command! -nargs=* Tt :term <args>
 nmap <silent> <leader>t :sp \| term<CR>
 tnoremap <C-w>; <C-w>:
