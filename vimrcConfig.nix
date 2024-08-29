@@ -61,11 +61,29 @@ in
   packages.myPackages = with pkgs.vimPlugins;
     {
       start = [
-
         # Style
         vim-colorschemes
         vim-airline
         vim-airline-themes
+
+        # Windows
+
+        {
+          plugin = pkgs.vimUtils.buildVimPlugin {
+            name = "nvim-focus";
+            src = pkgs.fetchFromGitHub {
+              owner = "nvim-focus";
+              repo = "focus.nvim";
+              rev = "master";
+              sha256 = "sha256-mgHk4u0ab2uSUNE+7DU22IO/xS5uop9iATfFRk6l6hs=";
+            };
+          };
+          config = ''
+            lua << EOF
+              require('focus').setup()
+            EOF
+          '';
+        }
 
         # Errors showing 
         ale
