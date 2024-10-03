@@ -204,6 +204,7 @@ in
               vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
               vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
               vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+              vim.keymap.set('n', '<space>a', vim.diagnostic.setqflist)
 
               vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('UserLspConfig', {}),
