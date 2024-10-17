@@ -245,12 +245,12 @@ in
         }
         # Folds
         # depends on lsp-config
+            # set foldlevel=22
+            # set foldmethod=expr
+            # set foldexpr=nvim_treesitter#foldexpr()
         {
           plugin = nvim-ufo;
           config = ''
-            set foldlevel=22
-            set foldmethod=expr
-            set foldexpr=nvim_treesitter#foldexpr()
             lua << EOF
 
             vim.o.foldcolumn = '1' -- '0' is not bad
@@ -264,11 +264,9 @@ in
             vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
             require('ufo').setup({
-                open_fold_hl_timeout = 0,
                 provider_selector = function(bufnr, filetype, buftype)
                     return {'lsp', 'indent'}
                 end
-                close_fold_kinds = {}, 
             })
             EOF
           '';
