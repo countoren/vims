@@ -243,11 +243,22 @@ in
               EOF
             '';
         }
+            # vim.keymap.set('n', 'zm', function()
+            #   vim.cmd('normal! zM')  -- Close all folds
+            #   vim.o.foldlevel = 99  -- Keep foldlevel high
+            # end)
+
+            # vim.keymap.set('n', 'zr', function()
+            #   vim.cmd('normal! zR')  -- Open all folds
+            #   vim.o.foldlevel = 99
+            # end)
         # Folds
         # depends on lsp-config
             # set foldlevel=22
             # set foldmethod=expr
             # set foldexpr=nvim_treesitter#foldexpr()
+
+            # vim.o.foldmethod = expr 
         {
           plugin = nvim-ufo;
           config = ''
@@ -255,14 +266,15 @@ in
 
             vim.o.foldcolumn = '1' -- '0' is not bad
             vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-            vim.o.foldmethod = expr 
             vim.o.foldlevelstart = 99
             vim.o.foldenable = true
 
             -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-            vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-            vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+            local ufo = require('ufo')
 
+
+            vim.keymap.set('n', 'zd', require('ufo').openAllFolds)
+            vim.keymap.set('n', 'zx', require('ufo').closeAllFolds)
             require('ufo').setup({
                 provider_selector = function(bufnr, filetype, buftype)
                     return {'lsp', 'indent'}
