@@ -11,7 +11,7 @@ set ruler
 set showmatch
 set ls=2
 set iskeyword+=_,$,@,%,#  
-set foldmethod=marker
+" set foldmethod=marker
 " set backspace=2
 set nocompatible
 
