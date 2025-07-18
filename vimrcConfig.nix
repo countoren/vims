@@ -313,6 +313,7 @@ in
         {
           plugin = gitsigns-nvim;
           config = ''
+            cabbrev gn Gitsigns
             nnoremap <leader>gm <cmd>lua require('gitsigns').blame_line(true)<cr>
             lua << EOF
               require('gitsigns').setup{
