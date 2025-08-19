@@ -2,7 +2,8 @@
 , pkgsPath ? toString (import ../pkgsPath.nix)
 , additionalVimrc?  ""
 , additionalPlugins? []
-, nvimNixPath ? ./nvim.nix  
+, nvimNixPath ? ./nvim.nix
+, fontSize ? "15"
 }:
 pkgs.symlinkJoin {
   name = "onvide";
@@ -19,7 +20,7 @@ pkgs.symlinkJoin {
     })
     */
     pkgs.neovide
-    (import nvimNixPath { inherit pkgs pkgsPath additionalVimrc additionalPlugins; } )
+    (import nvimNixPath { inherit pkgs pkgsPath additionalVimrc additionalPlugins fontSize; } )
   ];
   buildInputs = [ pkgs.makeWrapper ];
   postBuild = ''
