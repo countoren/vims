@@ -1,9 +1,10 @@
 { pkgs ? import <nixpkgs> {}
+, fontSize? "20"
 , pkgsPath
 , additionalVimrc 
 , additionalPlugins
 }:
-import ./nvim.nix { inherit pkgs; 
+import ./nvim.nix { inherit pkgs fontSize; 
   additionalVimrc = ''
   '' + additionalVimrc;
   additionalPlugins = with pkgs.vimPlugins; [
