@@ -227,6 +227,7 @@ in
                   vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
                 end,
               })
+
                   require('lspconfig').nil_ls.setup {
                     autostart = true,
                     capabilities = caps,
@@ -236,10 +237,31 @@ in
                         testSetting = 42,
                         formatting = {
                           command = { "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" },
+                         },
+                       },
+                       },
+                   }
+
+
+                require('lspconfig').nixd.setup {
+                  autostart = true,
+                  capabilities = caps,
+                  cmd = { "nixd" },
+                  settings = {
+                    nixd = {
+                      nixpkgs = {
+
+                        expr = 'import ((builtins.getFlake ("git+file://" + toString ./.)).inputs.nixpkgs) {}',
+                      },
+                      options = {
+                        nixos = {
+                           expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.work.options',
                         },
                       },
-                    },
-                  }
+                   },
+                  },
+                }
+
               EOF
             '';
         }
