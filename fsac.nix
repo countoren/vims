@@ -1,22 +1,41 @@
-{ pkgs ? import <nixpkgs> {}
-, fetchurl ? pkgs.fetchurl
-, unzip ? pkgs.unzip
-, stdenv ? pkgs.stdenv
+{
+  buildDotnetGlobalTool,
+  lib,
+  dotnetCorePackages,
+  writeShellScriptBin,
 }:
-stdenv.mkDerivation rec {
-  name = "FsAutoComplete";
-  version = "0.46.5";
-  src = fetchurl { 
-    url = "https://github.com/fsharp/${name}/releases/download/${version}/fsautocomplete.netcore.zip";
-    sha256 = "1b1639f13yrx3ngs2v55bzsfkxvwa6pzldxpsirz87mx9vkj3jb4";
+
+let
+  fsautocomplete = buildDotnetGlobalTool {
+    pname = "fsautocomplete";
+    version = "0.83.0";
+
+    nugetSha256 = "sha256-1WK6vb/UfqnF5KlwrjmGTPeAnEgwPswcYweeotB6j00=";
+
+    dotnet-runtime =
+      with dotnetCorePackages;
+      combinePackages [
+        sdk_9_0
+      ];
+
+    meta = with lib; {
+      homepage = "https://github.com/fsharp/FsAutoComplete";
+      changelog = "https://github.com/fsharp/FsAutoComplete/releases";
+      license = licenses.apsl20;
+      platforms = platforms.linux ++ platforms.darwin;
+    };
   };
-  sourceRoot = ".";
-  buildInputs = [ unzip ];
-  buildPhase = ''
-    chmod -R +r *
+in
+{
+  # Prefers a project-local dotnet tool install over the nix package,
+  # falling back to the nix-built binary if none is found.
+  fsautocomplete-local-or-nix = writeShellScriptBin "fsautocomplete" ''
+    if command -v dotnet >/dev/null && dotnet tool run fsautocomplete --version >/dev/null 2>/dev/null;
+    then
+      exec dotnet tool run fsautocomplete "$@"
+    else
+      exec "${fsautocomplete}/bin/fsautocomplete" "$@"
+    fi
   '';
-  installPhase = ''
-    mkdir -p $out
-    cp -r * $out/
-  '';
+  inherit fsautocomplete;
 }
