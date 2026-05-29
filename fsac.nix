@@ -10,7 +10,7 @@ let
     pname = "fsautocomplete";
     version = "0.83.0";
 
-    nugetSha256 = "sha256-1WK6vb/UfqnF5KlwrjmGTPeAnEgwPswcYweeotB6j00=";
+    nugetSha256 = "sha256-5K93/XwKG+pgNW6UfW1OOgHv01Xh7xYnLB5v/AyhpUw=";
 
     dotnet-runtime =
       with dotnetCorePackages;
